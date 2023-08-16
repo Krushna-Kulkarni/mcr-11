@@ -4,7 +4,7 @@ import { MoviesContext } from "../contexts/MoviesContext";
 const MovieCard = ({ movie }) => {
   const { starred, watchList, addToWatchList, addToStarred } =
     useContext(MoviesContext);
-
+  console.log(starred);
   const { title, summary, imageURL } = movie;
   return (
     <>
@@ -26,7 +26,7 @@ const MovieCard = ({ movie }) => {
               </button>
             ) : (
               <button
-                onClick={addToStarred(movie)}
+                onClick={() => addToStarred(movie)}
                 className="text-sm p-1 bg-slate-600 text-white"
               >
                 Star
@@ -38,7 +38,7 @@ const MovieCard = ({ movie }) => {
               </button>
             ) : (
               <button
-                onClick={addToWatchList(movie)}
+                onClick={() => addToWatchList(movie)}
                 className="text-sm p-1 bg-slate-600 text-white"
               >
                 Add to Watchlist

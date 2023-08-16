@@ -44,7 +44,7 @@ const MovieListing = () => {
           <div className="p-1">
             <select onChange={(e) => ratingFilter(e.target.value)}>
               <option value="All">Rating</option>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => {
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((rating) => {
                 return (
                   <option key={rating} value={rating}>
                     {rating}
@@ -61,7 +61,7 @@ const MovieListing = () => {
         </div>
       </div>
       <div className="flex gap-5 justify-evenly flex-wrap m-5 p-4 border-solid border-2 border-black">
-        {filteredMovies.map((movie) => {
+        {filteredMovies?.map((movie) => {
           return <MovieCard movie={movie} />;
         })}
       </div>

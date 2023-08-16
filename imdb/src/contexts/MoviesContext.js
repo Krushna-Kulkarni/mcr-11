@@ -9,11 +9,11 @@ export const MoviesProvider = ({ children }) => {
   const [searchText, setSearchText] = useState("");
 
   const [filters, setFilters] = useState({
+    textfilter: "",
     genre: "All",
     year: "All",
     rating: "All",
   });
-  console.log(filters.year);
 
   const genres = [
     ...new Set(
@@ -33,43 +33,55 @@ export const MoviesProvider = ({ children }) => {
       }, [])
     ),
   ];
-  const textFiltered =
-    searchText === ""
-      ? allMovies
-      : allMovies.filter((movie) => {
-          movie?.title?.toLowerCase().includes(searchText.toLowerCase()) ||
-            movie?.cast?.toLowerCase().includes(searchText.toLowerCase()) ||
-            movie?.director?.toLowerCase().includes(searchText.toLowerCase());
-        });
+  console.log({ ST: searchText });
 
   const genreFiltered =
     filters?.genre === "All"
-      ? textFiltered
-      : textFiltered.filter((movie) => movie?.genre?.includes(filters?.genre));
+      ? allMovies
+      : allMovies?.filter((movie) => movie?.genre?.includes(filters?.genre));
 
   const yearFiltered =
     filters?.year === "All"
       ? genreFiltered
-      : genreFiltered.filter((movie) => movie?.year === filters?.year);
+      : genreFiltered?.filter((movie) => movie?.year === filters?.year);
 
   const ratingFiltered =
     filters?.rating === "All"
       ? yearFiltered
-      : yearFiltered.filter((movie) => movie?.rating >= filters?.rating);
+      : yearFiltered?.filter((movie) => movie?.rating === filters?.rating);
 
-  const filteredMovies = ratingFiltered;
+  const textFiltered =
+    searchText === ""
+      ? ratingFiltered
+      : ratingFiltered.filter((movie) => {
+          return (
+            movie?.title?.toLowerCase().includes(searchText.toLowerCase()) ||
+            movie?.cast?.includes(searchText.toLowerCase()) ||
+            movie?.director?.toLowerCase().includes(searchText.toLowerCase())
+          );
+        });
+
+  console.log(textFiltered);
+
+  const filteredMovies = textFiltered;
+
   const searchTextHandler = (text) => {
     setSearchText(text);
+    setFilters({ ...filters, textfilter: text });
   };
 
   const genreFilter = (genre) => {
     setFilters({ ...filters, genre: genre });
   };
   const yearFilter = (year) => {
-    setFilters({ ...filters, year: Number(year) });
+    year === "All"
+      ? setFilters({ ...filters, year: year })
+      : setFilters({ ...filters, year: Number(year) });
   };
   const ratingFilter = (rating) => {
-    setFilters({ ...filters, rating: Number(rating) });
+    rating === "All"
+      ? setFilters({ ...filters, rating: rating })
+      : setFilters({ ...filters, rating: Number(rating) });
   };
 
   const addToWatchList = (item) => {

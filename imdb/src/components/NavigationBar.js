@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MoviesContext } from "../contexts/MoviesContext";
 
 const NavigationBar = () => {
@@ -23,9 +23,15 @@ const NavigationBar = () => {
       </div>
       <div className="p-2">
         <ul className="flex items-center">
-          <li className="p-1">Movies</li>
-          <li className="p-1">Watchlist</li>
-          <li className="p-1">Starred Movies</li>
+          <NavLink to="/">
+            <li className="p-1">Movies</li>
+          </NavLink>
+          <NavLink to="/watchlist">
+            <li className="p-1">Watchlist</li>
+          </NavLink>
+          <NavLink to="/starred">
+            <li className="p-1">Starred Movies</li>
+          </NavLink>
         </ul>
       </div>
     </div>
